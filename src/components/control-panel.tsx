@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { Alert, Button, Checkbox, Divider, Form, InputNumber, message } from 'antd';
+import { Alert, Button, Checkbox, Divider, Form, Input, InputNumber, message } from 'antd';
 import React from 'react';
 import { useAsyncFn, useToggle } from 'react-use';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,6 +10,7 @@ import { css } from '@emotion/react';
 import { useCollect } from '../hooks/use-collect';
 import { useGuideShow } from '../hooks/use-guide-show';
 import { useLeapController } from '../hooks/use-leap-controller';
+import { useServer } from '../hooks/use-server';
 import { useServerless } from '../hooks/use-serverless';
 import { useStartDelay } from '../hooks/use-start-delay';
 import { sleep } from '../util/sleep';
@@ -110,6 +111,7 @@ const TestCase: React.FC = () => {
 const Settings: React.FC = () => {
   const [startDelay, setStartDelay] = useStartDelay();
   const [serverless, setServerless] = useServerless();
+  const [server, setServer] = useServer();
 
   return (
     <div>
@@ -135,6 +137,11 @@ const Settings: React.FC = () => {
             使用 Serverless 服务
           </Checkbox>
         </Form.Item>
+        {serverless ? null : (
+          <Form.Item label="服务器地址">
+            <Input value={server} onChange={(e) => setServer(e.target.value)} />
+          </Form.Item>
+        )}
       </Form>
     </div>
   );

@@ -1,3 +1,4 @@
+import { useServer } from '../hooks/use-server';
 import { useServerless } from '../hooks/use-serverless';
 import { framesToShapeTrack } from './frame';
 
@@ -19,7 +20,9 @@ export async function reco(
 }> {
   return (
     await fetch(
-      useServerless.data?.[0] ? '/api/reco' : 'http://127.0.0.1:5000/reco',
+      useServerless.data?.[0]
+        ? '/api/reco'
+        : `http://${useServer.data?.[0] ?? '127.0.0.1:5000'}/reco`,
       {
         method: 'post',
         body: JSON.stringify(param),
