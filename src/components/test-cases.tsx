@@ -40,6 +40,7 @@ const ShowCase: React.FC<{ testCases: TestItem[] }> = ({ testCases }) => {
             <List.Item
               onClick={() => setSelectedItem(item)}
               className="hover:bg-gray-50 cursor-pointer"
+              key={item.label}
             >
               <List.Item.Meta className="pl-2" title={item.label} />
             </List.Item>

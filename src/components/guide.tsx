@@ -1,11 +1,12 @@
 import { Button, Checkbox, message, Modal, Steps } from 'antd';
 import React, { useEffect } from 'react';
-import { useAsyncFn, useCounter, useDebounce, useLocalStorage } from 'react-use';
+import { useAsyncFn, useCounter, useDebounce, useLatest, useLocalStorage } from 'react-use';
 
 import picAlllowWebApp from '../assets/allow-web-app.png';
 import picResumeTracking from '../assets/resume-tracking.png';
 import { useGuideShow } from '../hooks/use-guide-show';
 import { useLeapController } from '../hooks/use-leap-controller';
+import { sleep } from '../util/sleep';
 
 type StepSubTitle = React.FC<{
   stepIndex: number;
@@ -20,7 +21,7 @@ enum StepEnum {
 const StepInstallSoftware: StepSubTitle = ({ stepIndex }) => {
   const [{ loading }, onNextStep] = useAsyncFn(async () => {
     useLeapController.data?.resetLeapController();
-    await new Promise((r) => setTimeout(r, 2000));
+    await sleep(2000);
     if (!useLeapController.data?.serviceConnected) {
       message.error('未连接成功，请重新检查此步骤');
     }
@@ -128,16 +129,18 @@ export const GuideModal: React.FC = () => {
     true
   );
 
+  const autoShowGuideRef = useLatest(autoShowGuide);
+
   const [showGuide, setShowGuide] = useGuideShow();
 
   useDebounce(
     () => {
-      if (autoShowGuide) {
+      if (autoShowGuideRef.current) {
         setShowGuide(!(deviceStreaming && serviceConnected));
       }
     },
     1000,
-    [!(deviceStreaming && serviceConnected), autoShowGuide]
+    [!(deviceStreaming && serviceConnected)]
   );
 
   return (

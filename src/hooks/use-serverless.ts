@@ -1,4 +1,6 @@
 import { createModel } from 'hox';
-import { useState } from 'react';
+import { useLocalStorage } from 'react-use';
 
-export const useServerless = createModel(() => useState(true));
+export const useServerless = createModel(() =>
+  useLocalStorage('useServerless', false)
+);
