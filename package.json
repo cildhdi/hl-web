@@ -110,10 +110,13 @@
     ]
   },
   "devDependencies": {
+    "@types/node-fetch": "^2.5.10",
     "@types/react-router-dom": "^5.1.7",
     "@types/three": "^0.127.1",
     "@types/uuid": "^8.3.0",
+    "@vercel/node": "^1.10.0",
     "autoprefixer": "^9",
+    "node-fetch": "^2.6.1",
     "postcss": "^7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   },

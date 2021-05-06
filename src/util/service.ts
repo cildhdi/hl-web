@@ -18,16 +18,16 @@ export async function reco(
   code: number;
   data: string;
 }> {
+  const addr = useServerless.data?.[0]
+    ? '/api/reco'
+    : `${useServer.data?.[0] ?? 'http://127.0.0.1:5000'}/reco`;
+  const http = addr.startsWith('http:');
+
   return (
-    await fetch(
-      useServerless.data?.[0]
-        ? '/api/reco'
-        : `http://${useServer.data?.[0] ?? '127.0.0.1:5000'}/reco`,
-      {
-        method: 'post',
-        body: JSON.stringify(param),
-        mode: 'cors',
-      }
-    )
+    await fetch(http ? '/api/proxy' : addr, {
+      method: 'post',
+      body: JSON.stringify(Object.assign({}, param, http ? { addr } : {})),
+      mode: 'cors',
+    })
   ).json();
 }
