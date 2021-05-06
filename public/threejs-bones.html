@@ -5,9 +5,9 @@
     <script src="lib/leap-plugins-0.1.6.js"></script>
     <script src="lib/three.js"></script> -->
 
-    <script src="../../node_modules/leapjs/leap-1.1.0.min.js"></script>
-    <script src="../../node_modules/leapjs-plugins/index.js"></script>
-    <script src="../../node_modules/three/build/three.min.js"></script>
+    <script src="./leap-1.1.0.min.js"></script>
+    <script src="./leap-plugins-0.1.6.js"></script>
+    <script src="./three.js"></script>
   </head>
   <body></body>
 
@@ -195,27 +195,27 @@
 
       scene.add(camera);
 
-      var geometry = new THREE.CubeGeometry(30, 45, 10);
-      var material = new THREE.MeshPhongMaterial({ color: 0x0000cc });
-      window.cube = new THREE.Mesh(geometry, material);
-      cube.position.set(0, 0, 0);
-      cube.castShadow = true;
-      cube.receiveShadow = true;
-      scene.add(cube);
+      // var geometry = new THREE.CubeGeometry(30, 45, 10);
+      // var material = new THREE.MeshPhongMaterial({ color: 0x0000cc });
+      // window.cube = new THREE.Mesh(geometry, material);
+      // cube.position.set(0, 0, 0);
+      // cube.castShadow = true;
+      // cube.receiveShadow = true;
+      // scene.add(cube);
 
       renderer.render(scene, camera);
     };
 
     initScene();
 
-    var rotateCube = function () {
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.02;
-      renderer.render(scene, camera);
+    // var rotateCube = function () {
+    //   cube.rotation.x += 0.01;
+    //   cube.rotation.y += 0.02;
+    //   renderer.render(scene, camera);
 
-      window.requestAnimationFrame(rotateCube);
-    };
+    //   window.requestAnimationFrame(rotateCube);
+    // };
 
-    rotateCube();
+    // rotateCube();
   </script>
 </html>

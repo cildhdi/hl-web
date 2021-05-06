@@ -50,7 +50,7 @@ const ConnectStatus: React.FC = () => {
 };
 
 const RecoControl: React.FC = () => {
-  const { collect, toggleCollect } = useCollect();
+  const { collect, toggleCollect, frames } = useCollect();
   const { deviceStreaming } = useLeapController((model) => [
     model.deviceStreaming,
   ]);
@@ -68,16 +68,20 @@ const RecoControl: React.FC = () => {
       await sleep(1000);
     }
     message.destroy(key);
+    toggleCollect(true);
   }, []);
 
   return (
     <div>
+      <div className="font-light my-2">
+        已获取 {frames.current.length} 帧数据
+      </div>
       <Button
-        onClick={start}
+        onClick={collect ? () => toggleCollect(false) : start}
         type="primary"
         block
         loading={loading}
-        //disabled={!deviceStreaming}
+        disabled={!deviceStreaming}
       >
         {collect ? '停止' : '开始'}
       </Button>
