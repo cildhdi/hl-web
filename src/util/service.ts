@@ -1,5 +1,6 @@
 import { useServer } from '../hooks/use-server';
 import { useServerless } from '../hooks/use-serverless';
+import { IS_DEBUG } from './debug';
 import { framesToShapeTrack } from './frame';
 
 export interface TestItem {
@@ -21,12 +22,12 @@ export async function reco(
   const addr = useServerless.data?.[0]
     ? '/api/reco'
     : `${useServer.data?.[0] ?? 'http://127.0.0.1:5000'}/reco`;
-  const http = addr.startsWith('http:');
+  const prxoy = addr.startsWith('http:') && !IS_DEBUG;
 
   return (
-    await fetch(http ? '/api/proxy' : addr, {
+    await fetch(prxoy ? '/api/proxy' : addr, {
       method: 'post',
-      body: JSON.stringify(Object.assign({}, param, http ? { addr } : {})),
+      body: JSON.stringify(Object.assign({}, param, prxoy ? { addr } : {})),
       mode: 'cors',
     })
   ).json();
