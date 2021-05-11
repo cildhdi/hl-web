@@ -1,4 +1,5 @@
 {
     "editor.tabSize": 2,
-    "importSorter.generalConfiguration.sortOnBeforeSave": true
+    "importSorter.generalConfiguration.sortOnBeforeSave": true,
+    "importSorter.sortConfiguration.removeUnusedImports": true
 }

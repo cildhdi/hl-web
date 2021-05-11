@@ -24,6 +24,7 @@ export const useLeapController = createModel(() => {
   const [serviceConnected, toggleServiceConnected] = useToggle(false);
   const [deviceStreaming, toggleDeviceStreaming] = useToggle(false);
   const [paused, togglePaused] = useToggle(false);
+  const [deviceId, setDeviceId] = useState('');
 
   useEffect(() => {
     const listener = () => toggleServiceConnected(true);
@@ -35,6 +36,18 @@ export const useLeapController = createModel(() => {
     const listener = () => toggleServiceConnected(false);
     leapController.on('disconnect', listener);
     return () => leapController.off('disconnect', listener);
+  }, [leapController]); //eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const listener = (device: any) => setDeviceId(device.id);
+    leapController.on('deviceAttached', listener);
+    return () => leapController.off('deviceAttached', listener);
+  }, [leapController]); //eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const listener = () => setDeviceId('');
+    leapController.on('deviceRemoved', listener);
+    return () => leapController.off('deviceRemoved', listener);
   }, [leapController]); //eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -86,5 +99,6 @@ export const useLeapController = createModel(() => {
     leapController,
     resetLeapController,
     listenFrame,
+    deviceId,
   };
 });

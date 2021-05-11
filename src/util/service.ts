@@ -1,5 +1,4 @@
-import { useServer } from '../hooks/use-server';
-import { useServerless } from '../hooks/use-serverless';
+import { SERVER } from '../config';
 import { IS_DEBUG } from './debug';
 import { framesToShapeTrack } from './frame';
 
@@ -19,9 +18,7 @@ export async function reco(
   code: number;
   data: string;
 }> {
-  const addr = useServerless.data?.[0]
-    ? '/api/reco'
-    : `${useServer.data?.[0] ?? 'http://127.0.0.1:5000'}/reco`;
+  const addr = `${SERVER}/reco`;
   const prxoy = addr.startsWith('http:') && !IS_DEBUG;
 
   return (
