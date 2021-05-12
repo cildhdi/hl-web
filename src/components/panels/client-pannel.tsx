@@ -7,20 +7,32 @@ import React from 'react';
 import { useSocketIo } from '../../hooks/use-socket-io';
 
 export const ClientPannel: React.FC = () => {
-  const { token, clientConnected, serverConnected, refreshToken } = useSocketIo();
+  const { token, clientConnected, serverConnected, refreshToken } =
+    useSocketIo();
 
   return (
     <>
       <div className="my-4">
         <Alert
           showIcon
-          type={serverConnected ? (clientConnected ? 'success' : 'warning') : 'error'}
+          type={
+            serverConnected
+              ? clientConnected
+                ? 'success'
+                : 'warning'
+              : 'error'
+          }
           message={
             serverConnected ? (
               clientConnected ? (
                 <span>
                   客户端已连接
-                  <Button type="link" danger onClick={refreshToken} size="small">
+                  <Button
+                    type="link"
+                    danger
+                    onClick={refreshToken}
+                    size="small"
+                  >
                     断开
                   </Button>
                 </span>

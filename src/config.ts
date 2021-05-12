@@ -3,4 +3,4 @@ export enum RoutePath {
   tests = '/tests/:id',
 }
 
-export const SERVER = "https://hl.ketra.fun:6290";
+export const SERVER = 'https://hl.ketra.fun:6290';
