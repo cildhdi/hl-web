@@ -4,37 +4,31 @@ import { Alert, Button, Divider } from 'antd';
 import QrCode from 'qrcode.react';
 import React from 'react';
 
-import { css } from '@emotion/react';
-
 import { useSocketIo } from '../../hooks/use-socket-io';
 
 export const ClientPannel: React.FC = () => {
-  const { token, clientConnected, refreshToken } = useSocketIo();
+  const { token, clientConnected, serverConnected, refreshToken } = useSocketIo();
 
   return (
     <>
       <div className="my-4">
         <Alert
           showIcon
-          type={clientConnected ? 'success' : 'warning'}
+          type={serverConnected ? (clientConnected ? 'success' : 'warning') : 'error'}
           message={
-            clientConnected ? (
-              <span>
-                客户端已连接
-                <Button
-                  type="link"
-                  danger
-                  onClick={refreshToken}
-                  css={css`
-                    height: initial;
-                  `}
-                  size="small"
-                >
-                  断开
-                </Button>
-              </span>
+            serverConnected ? (
+              clientConnected ? (
+                <span>
+                  客户端已连接
+                  <Button type="link" danger onClick={refreshToken} size="small">
+                    断开
+                  </Button>
+                </span>
+              ) : (
+                '客户端未连接'
+              )
             ) : (
-              '客户端未连接'
+              '未连接到服务器'
             )
           }
         />

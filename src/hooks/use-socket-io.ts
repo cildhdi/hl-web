@@ -5,11 +5,12 @@ import { v4 as uuid } from 'uuid';
 
 import { SERVER } from '../config';
 
-const testRoom = 'test_room_id';
+const generateToken = () => `hld://${uuid()}`;
 
 export const useSocketIo = createModel(() => {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [token, setToken] = useState(() => testRoom);
+  const [token, setToken] = useState(generateToken);
+  const [serverConnected, setServerConnected] = useState(false);
   const [clientConnected, setClientConnected] = useState(false);
 
   useEffect(() => {
@@ -29,10 +30,12 @@ export const useSocketIo = createModel(() => {
         nextSocket.connect();
 
         setClientConnected(false);
+        setServerConnected(false);
 
+        nextSocket.on('connect', () => setServerConnected(true));
+        nextSocket.on('disconnect', () => setServerConnected(false));
         nextSocket.on('hl_client_enter', () => setClientConnected(true));
         nextSocket.on('hl_client_leave', () => setClientConnected(false));
-        nextSocket.onAny(console.log);
 
         return nextSocket;
       });
@@ -40,8 +43,8 @@ export const useSocketIo = createModel(() => {
   }, [token]);
 
   const refreshToken = useCallback(() => {
-    setToken(uuid());
+    setToken(generateToken());
   }, []);
 
-  return { socket, token, clientConnected, refreshToken };
+  return { socket, token, clientConnected, serverConnected, refreshToken };
 });
