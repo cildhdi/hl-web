@@ -1,11 +1,12 @@
 import { Button, message } from 'antd';
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useAsyncFn } from 'react-use';
 import { v4 as uuidv4 } from 'uuid';
 
+import { useSync } from '../../hooks/create-sync-value';
 import { useCollect } from '../../hooks/use-collect';
+import { useEvent } from '../../hooks/use-hl-event';
 import { useLeapController } from '../../hooks/use-leap-controller';
-import { useStartDelay } from '../../hooks/use-start-delay';
 import { sleep } from '../../util/sleep';
 
 export const RecoControl: React.FC = () => {
@@ -16,7 +17,7 @@ export const RecoControl: React.FC = () => {
 
   const [{ loading }, start] = useAsyncFn(async () => {
     const key = uuidv4();
-    const waitTime = useStartDelay.data?.[0] ?? 2;
+    const waitTime = useSync.Delay.data?.[0] ?? 2;
 
     for (let index = waitTime; index > 0; index--) {
       message.loading({
@@ -28,7 +29,22 @@ export const RecoControl: React.FC = () => {
     }
     message.destroy(key);
     toggleCollect(true);
-  }, []);
+  }, [toggleCollect]);
+
+  const onClick = useCallback(() => {
+    if (collect) {
+      toggleCollect(false);
+    } else {
+      start();
+    }
+  }, [collect]);
+
+  useEvent('reco_btn', onClick);
+  const [, setDisabled] = useSync.Disabled();
+  useEffect(
+    () => setDisabled(loading || !deviceStreaming),
+    [loading, deviceStreaming]
+  );
 
   return (
     <div>
@@ -36,7 +52,7 @@ export const RecoControl: React.FC = () => {
         已获取 {frames.current.length} 帧数据
       </div>
       <Button
-        onClick={collect ? () => toggleCollect(false) : start}
+        onClick={onClick}
         type="primary"
         block
         loading={loading}

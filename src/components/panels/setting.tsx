@@ -1,10 +1,10 @@
 import { Form, InputNumber } from 'antd';
 import React from 'react';
 
-import { useStartDelay } from '../../hooks/use-start-delay';
+import { useSync } from '../../hooks/create-sync-value';
 
 export const Settings: React.FC = () => {
-  const [startDelay, setStartDelay] = useStartDelay();
+  const [startDelay, setStartDelay] = useSync.Delay();
 
   return (
     <div>

@@ -1,20 +1,16 @@
 import { message } from 'antd';
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLatest, useUpdate } from 'react-use';
 import { v4 as uuidV4 } from 'uuid';
 
 import { useLeapController } from '../hooks/use-leap-controller';
 import { Frame, framesToShapeTrack } from '../util/frame';
 import { reco } from '../util/service';
-import { useSyncModel } from './use-sync-model';
+import { useSync } from './create-sync-value';
 
 export const useCollect = () => {
   const { listenFrame } = useLeapController((model) => [model.listenFrame]);
-  const { syncModel, syncModelActions } = useSyncModel();
-  const collect = !!syncModel.collect;
-  const toggleCollect = useCallback((collect: boolean) => {
-    syncModelActions.set('collect', collect);
-  }, []); //eslint-disable-line react-hooks/exhaustive-deps
+  const [collect, toggleCollect] = useSync.Collect();
   const lastestCollect = useLatest(collect);
   const frames = useRef<Frame[]>([]);
 
