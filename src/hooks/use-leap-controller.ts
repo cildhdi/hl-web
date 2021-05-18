@@ -6,6 +6,8 @@ import { useToggle } from 'react-use';
 
 import { Frame } from '../util/frame';
 
+window.Leap = Leap;
+
 type FrameCallback = (frame: Frame) => void;
 
 const createLeapController = () => new Leap.Controller();
