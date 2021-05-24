@@ -1,3 +1,4 @@
+import { useThrottleFn } from 'ahooks';
 import { message } from 'antd';
 import { useEffect, useRef } from 'react';
 import { useLatest, useUpdate } from 'react-use';
@@ -13,17 +14,17 @@ export const useCollect = () => {
   const [collect, toggleCollect] = useSync.Collect();
   const lastestCollect = useLatest(collect);
   const frames = useRef<Frame[]>([]);
-
   const forceUpdate = useUpdate();
+  const { run: throttledForceUpdate } = useThrottleFn(forceUpdate, {
+    wait: 500,
+  });
 
   useEffect(
     () =>
       listenFrame((frame) => {
         if (frame.hands.length && lastestCollect.current) {
           frames.current.push(frame);
-          if (frames.current.length % 10 === 0) {
-            forceUpdate();
-          }
+          throttledForceUpdate();
         }
       }),
     [listenFrame] //eslint-disable-line react-hooks/exhaustive-deps

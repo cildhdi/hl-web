@@ -37,13 +37,13 @@ export const RecoControl: React.FC = () => {
     } else {
       start();
     }
-  }, [collect]);
+  }, [collect]); //eslint-disable-line react-hooks/exhaustive-deps
 
   useEvent('reco_btn', onClick);
   const [, setDisabled] = useSync.Disabled();
   useEffect(
     () => setDisabled(loading || !deviceStreaming),
-    [loading, deviceStreaming]
+    [loading, deviceStreaming] //eslint-disable-line react-hooks/exhaustive-deps
   );
 
   return (

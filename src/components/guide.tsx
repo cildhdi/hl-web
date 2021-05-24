@@ -69,7 +69,7 @@ const StepConnectDevice: StepSubTitle = ({ stepIndex }) => {
       ) : (
         <div className="flex">
           <div className="flex-1 mr-2">
-            将您的的 Leap Motion
+            将您的 Leap Motion
             设备连接到此电脑并稍候一段时间，当我们检测到设备连接时，会自动进行到下一步。
             如果长时间没有进行到下一步，请检查是否暂停了设备跟踪。
           </div>

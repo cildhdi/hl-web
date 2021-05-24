@@ -4,7 +4,7 @@ import React from 'react';
 import { useLeapController } from '../hooks/use-leap-controller';
 import { useSocketIo } from '../hooks/use-socket-io';
 import { ControlPanel } from './control-panel';
-import { RealtimeBone } from './realtime-bone';
+import { Preview } from './preview';
 import { WaitForConnection } from './wait-for-connect';
 
 export const IndexPage: React.FC = () => {
@@ -20,7 +20,7 @@ export const IndexPage: React.FC = () => {
         <ControlPanel />
         <Divider type="vertical" className="h-full" />
         <div className="flex-1">
-          {deviceStreaming ? <RealtimeBone /> : <WaitForConnection />}
+          {deviceStreaming ? <Preview /> : <WaitForConnection />}
         </div>
       </div>
     </>

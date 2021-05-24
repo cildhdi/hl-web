@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import 'leapjs-plugins/main/leap-plugins-0.1.12';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -51,7 +53,7 @@ export const RealtimeBone: React.FC = () => {
 
   const onSizeChange = useCallback(() => {
     if (ref.current) {
-      debugger;
+      // debugger;
       camera.aspect = ref.current.clientWidth / ref.current.clientHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(ref.current.clientWidth, ref.current.clientHeight);
