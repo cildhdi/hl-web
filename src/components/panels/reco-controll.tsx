@@ -1,43 +1,29 @@
-import { Button, message } from 'antd';
+import { Button, Divider } from 'antd';
 import React, { useCallback, useEffect } from 'react';
-import { useAsyncFn } from 'react-use';
-import { v4 as uuidv4 } from 'uuid';
 
 import { useSync } from '../../hooks/create-sync-value';
 import { useCollect } from '../../hooks/use-collect';
 import { useEvent } from '../../hooks/use-hl-event';
 import { useLeapController } from '../../hooks/use-leap-controller';
-import { sleep } from '../../util/sleep';
+import { HistoryModal } from '../history-modal';
 
 export const RecoControl: React.FC = () => {
-  const { collect, toggleCollect, frames } = useCollect();
+  const {
+    collect,
+    latestCollect,
+    frames,
+    startCollectSyncState: [{ loading }, startCollect],
+    stopCollect,
+    uploadToReco,
+  } = useCollect();
   const { deviceStreaming } = useLeapController((model) => [
     model.deviceStreaming,
   ]);
 
-  const [{ loading }, start] = useAsyncFn(async () => {
-    const key = uuidv4();
-    const waitTime = useSync.Delay.data?.[0] ?? 2;
-
-    for (let index = waitTime; index > 0; index--) {
-      message.loading({
-        content: `手势采集将在 ${index} 秒后开始，请准备`,
-        duration: 0,
-        key,
-      });
-      await sleep(1000);
-    }
-    message.destroy(key);
-    toggleCollect(true);
-  }, [toggleCollect]);
-
-  const onClick = useCallback(() => {
-    if (collect) {
-      toggleCollect(false);
-    } else {
-      start();
-    }
-  }, [collect]); //eslint-disable-line react-hooks/exhaustive-deps
+  const onClick = useCallback(
+    () => (latestCollect.current ? stopCollect : startCollect)(),
+    [latestCollect, startCollect, stopCollect]
+  );
 
   useEvent('reco_btn', onClick);
   const [, setDisabled] = useSync.Disabled();
@@ -51,15 +37,17 @@ export const RecoControl: React.FC = () => {
       <div className="font-light my-2">
         已获取 {frames.current.length} 帧数据
       </div>
-      <Button
-        onClick={onClick}
-        type="primary"
-        block
-        loading={loading}
-        disabled={!deviceStreaming}
-      >
-        {collect ? '停止' : '开始'}
-      </Button>
+      <div>
+        <Button onClick={onClick} loading={loading} disabled={!deviceStreaming}>
+          {collect ? '停止' : '开始'}
+        </Button>
+        <Divider type="vertical" />
+        <Button disabled={!frames.current.length} onClick={uploadToReco}>
+          上传识别
+        </Button>
+        <Divider type="vertical" />
+        <HistoryModal />
+      </div>
     </div>
   );
 };

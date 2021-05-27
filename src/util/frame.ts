@@ -33,6 +33,7 @@ interface Hand {
 
 export interface Frame {
   currentFrameRate: number;
+  timestamp: number;
   hands: Hand[];
   valid: boolean;
   type: 'frame';
@@ -44,6 +45,7 @@ export function convertFrame(frame: any): Frame {
     hands: [],
     valid: !!frame?.valid,
     type: 'frame',
+    timestamp: frame?.timestamp ?? 0,
   };
   if (Array.isArray(frame.hands)) {
     for (let index = 0; index < frame.hands.length; index++) {

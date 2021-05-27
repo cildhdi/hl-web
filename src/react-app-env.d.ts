@@ -76,7 +76,3 @@ declare module '*.html' {
 }
 
 declare module 'leapjs';
-
-declare interface Window {
-  Leap: any;
-}

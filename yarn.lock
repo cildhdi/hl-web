@@ -7498,13 +7498,6 @@ last-call-webpack-plugin@^3.0.0:
     lodash "^4.17.5"
     webpack-sources "^1.1.0"
 
-leapjs-plugins@^0.1.12:
-  version "0.1.12"
-  resolved "https://registry.nlark.com/leapjs-plugins/download/leapjs-plugins-0.1.12.tgz#12d78e6e380c187778112c6f26da03816a939f29"
-  integrity sha1-EteObjgMGHd4ESxvJtoDgWqTnyk=
-  dependencies:
-    three "^0.69.0"
-
 leapjs@cildhdi/leapjs:
   version "1.1.0"
   resolved "https://codeload.github.com/cildhdi/leapjs/tar.gz/7d65e9ef4626ecf0c18f1e4ecf2810f11da000e9"
@@ -11877,11 +11870,6 @@ three@^0.128.0:
   version "0.128.0"
   resolved "https://registry.nlark.com/three/download/three-0.128.0.tgz?cache=0&sync_timestamp=1619177927305&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fthree%2Fdownload%2Fthree-0.128.0.tgz#884dacca6a330e45600a09ec5439283f50b76aa6"
   integrity sha1-iE2symozDkVgCgnsVDkoP1C3aqY=
-
-three@^0.69.0:
-  version "0.69.0"
-  resolved "https://registry.nlark.com/three/download/three-0.69.0.tgz?cache=0&sync_timestamp=1619177927305&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fthree%2Fdownload%2Fthree-0.69.0.tgz#db556538cb4d7a3a6665c752ec39edfca307228f"
-  integrity sha1-21VlOMtNejpmZcdS7Dnt/KMHIo8=
 
 throat@^5.0.0:
   version "5.0.0"
