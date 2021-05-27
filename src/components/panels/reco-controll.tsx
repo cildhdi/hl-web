@@ -35,14 +35,19 @@ export const RecoControl: React.FC = () => {
   return (
     <div>
       <div className="font-light my-2">
-        已获取 {frames.current.length} 帧数据
+        {collect || frames.current.length
+          ? `已获取 ${frames.current.length} 帧数据`
+          : '点击“开始”录制数据，结束后“上传识别”'}
       </div>
       <div>
         <Button onClick={onClick} loading={loading} disabled={!deviceStreaming}>
           {collect ? '停止' : '开始'}
         </Button>
         <Divider type="vertical" />
-        <Button disabled={!frames.current.length} onClick={uploadToReco}>
+        <Button
+          disabled={!frames.current.length || collect}
+          onClick={uploadToReco}
+        >
           上传识别
         </Button>
         <Divider type="vertical" />
