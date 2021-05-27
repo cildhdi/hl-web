@@ -29,49 +29,49 @@ export const useLeapController = createModel(() => {
   useEffect(() => {
     const listener = () => toggleServiceConnected(true);
     leapController.on('connect', listener);
-    return () => leapController?.off?.('connect', listener);
+    return () => leapController?.off('connect', listener);
   }, [leapController]); //eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const listener = () => toggleServiceConnected(false);
     leapController.on('disconnect', listener);
-    return () => leapController?.off?.('disconnect', listener);
+    return () => leapController?.off('disconnect', listener);
   }, [leapController]); //eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const listener = (device: any) => setDeviceId(device.id);
     leapController.on('deviceAttached', listener);
-    return () => leapController?.off?.('deviceAttached', listener);
+    return () => leapController?.off('deviceAttached', listener);
   }, [leapController]); //eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const listener = () => setDeviceId('');
     leapController.on('deviceRemoved', listener);
-    return () => leapController?.off?.('deviceRemoved', listener);
+    return () => leapController?.off('deviceRemoved', listener);
   }, [leapController]); //eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const listener = () => toggleDeviceStreaming(true);
     leapController.on('deviceStreaming', listener);
-    return () => leapController?.off?.('deviceStreaming', listener);
+    return () => leapController?.off('deviceStreaming', listener);
   }, [leapController]); //eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const listener = () => toggleDeviceStreaming(false);
     leapController.on('deviceStopped', listener);
-    return () => leapController?.off?.('deviceStopped', listener);
+    return () => leapController?.off('deviceStopped', listener);
   }, [leapController]); //eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const listener = () => togglePaused(true);
     leapController.on('blur', listener);
-    return () => leapController?.off?.('blur', listener);
+    return () => leapController?.off('blur', listener);
   }, [leapController]); //eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const listener = () => togglePaused(false);
     leapController.on('focus', listener);
-    return () => leapController?.off?.('focus', listener);
+    return () => leapController?.off('focus', listener);
   }, [leapController]); //eslint-disable-line react-hooks/exhaustive-deps
 
   const frameCallbacks = useRef<FrameCallback[]>([]);
@@ -82,7 +82,7 @@ export const useLeapController = createModel(() => {
     };
     leapController.loop(listener);
     return () => {
-      leapController?.off?.(leapController.frameEventName, listener);
+      leapController?.off(leapController.frameEventName, listener);
     };
   }, [leapController]);
 

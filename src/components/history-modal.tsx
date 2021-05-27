@@ -34,6 +34,7 @@ export const HistoryModal: React.FC = () => {
           rowKey="timestamp"
           pagination={{
             pageSize: 6,
+            showSizeChanger: false
           }}
         />
       </Modal>

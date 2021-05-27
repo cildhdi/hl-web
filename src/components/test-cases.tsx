@@ -47,7 +47,7 @@ const ShowCase: React.FC<{ testCases: TestItem[] }> = ({ testCases }) => {
           )}
         />
       </div>
-      <div className="flex-1 overflow-auto pr-3">
+      <div className="flex-1 overflow-auto pr-3 pl-3">
         {memoizedItem && selectedItem ? (
           <List
             header={

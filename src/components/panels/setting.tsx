@@ -2,9 +2,11 @@ import { Form, InputNumber } from 'antd';
 import React from 'react';
 
 import { useSync } from '../../hooks/create-sync-value';
+import { useFrameMod } from '../../hooks/use-frame-mod';
 
 export const Settings: React.FC = () => {
   const [startDelay, setStartDelay] = useSync.Delay();
+  const [frameMod, setFrameMod] = useFrameMod();
 
   return (
     <div>
@@ -20,6 +22,15 @@ export const Settings: React.FC = () => {
             onChange={setStartDelay}
             min={1}
             max={10}
+          />
+        </Form.Item>
+        <Form.Item label="帧间隔" help="设置每多少帧取一帧作为输入">
+          <InputNumber
+            className="block w-full"
+            value={frameMod}
+            onChange={setFrameMod}
+            min={5}
+            max={50}
           />
         </Form.Item>
       </Form>

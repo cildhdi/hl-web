@@ -1,5 +1,7 @@
 import { fill, flatten, pick } from 'lodash-es';
 
+import { useFrameMod } from '../hooks/use-frame-mod';
+
 type Point = [number, number, number];
 
 interface Bone {
@@ -111,6 +113,8 @@ function frameToArray(frame: Frame, shape?: boolean): number[] {
 }
 
 export function framesToShapeTrack(frames: Frame[]) {
+  const frameMod = useFrameMod.data?.[0] ?? 5;
+  frames = frames.filter((_, index) => index % frameMod === 0);
   const shape = frames.map((f) => frameToArray(f, true));
   const track: number[][] = [];
 
