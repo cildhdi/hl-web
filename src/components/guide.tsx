@@ -2,7 +2,7 @@ import { Button, Checkbox, message, Modal, Steps } from 'antd';
 import React, { useEffect } from 'react';
 import { useAsyncFn, useCounter, useDebounce, useLatest, useLocalStorage } from 'react-use';
 
-import picAlllowWebApp from '../assets/allow-web-app.png';
+import picAlllowSetting from '../assets/allow-setting.png';
 import picResumeTracking from '../assets/resume-tracking.png';
 import { useGuideShow } from '../hooks/use-guide-show';
 import { useLeapController } from '../hooks/use-leap-controller';
@@ -38,20 +38,21 @@ const StepInstallSoftware: StepSubTitle = ({ stepIndex }) => {
             type="link"
             href="https://developer.leapmotion.com/sdk-leap-motion-controller/"
             target="_blank"
+            size="small"
           >
             此链接
           </Button>
           前往官网选择下载适合您系统的 Leap Motion Controller 软件并安装。
           <br />
-          启动软件并进入“设置 &gt; 常规”，勾选“允许Web应用程序”。
+          启动软件并进入“设置 &gt;
+          常规”，勾选“允许Web应用程序”与“允许后台应用程序”。
           <br />
           <img
-            src={picAlllowWebApp}
+            src={picAlllowSetting}
             width="300px"
             alt="勾选“允许Web应用程序”"
             className="mb-3"
           />
-          <br />
           <Button type="primary" onClick={onNextStep} loading={loading}>
             我已完成，下一步
           </Button>
