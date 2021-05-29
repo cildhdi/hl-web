@@ -5,7 +5,7 @@ import { useAsyncFn, useLatest, useUpdate } from 'react-use';
 import { v4 as uuidV4 } from 'uuid';
 
 import { useLeapController } from '../hooks/use-leap-controller';
-import { Frame, framesToShapeTrack } from '../util/frame';
+import { Frame, framesToList } from '../util/frame';
 import { reco } from '../util/service';
 import { sleep } from '../util/sleep';
 import { useSync } from './create-sync-value';
@@ -59,7 +59,7 @@ export const useCollect = () => {
       duration: 0,
       key,
     });
-    const param = framesToShapeTrack(frames.current);
+    const param = framesToList(frames.current);
     reco(param)
       .then(({ data }) => {
         message.success({

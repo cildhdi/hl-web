@@ -78,7 +78,7 @@ export function convertFrame(frame: any): Frame {
 
 const handToPoints = (hand: Hand): Point[] => [
   hand.arm.nextJoint,
-  hand.arm.prevJoint,
+  // hand.arm.prevJoint,
   ...flatten(
     hand.fingers.map((finger) => [
       finger.mcpPosition,
@@ -103,11 +103,11 @@ function frameToArray(frame: Frame, shape?: boolean): number[] {
 
   const leftHandArray = leftHand
     ? (shape ? handToShapeArray : handToArray)(leftHand)
-    : fill(Array(66), 0);
+    : fill(Array(63), 0);
 
   const rightHandArray = rightHand
     ? (shape ? handToShapeArray : handToArray)(rightHand)
-    : fill(Array(66), 0);
+    : fill(Array(63), 0);
 
   return flatten([leftHandArray, rightHandArray]);
 }
@@ -127,7 +127,16 @@ export function framesToShapeTrack(frames: Frame[]) {
         })
       );
       return cur;
-    }, fill(Array(66), 0));
+    }, fill(Array(63), 0));
 
   return { shape, track };
+}
+
+export function framesToList(frames: Frame[]) {
+  const frameMod = useFrameMod.data?.[0] ?? 5;
+  return {
+    data: frames
+      .filter((_, index) => index % frameMod === 0)
+      .map((f) => frameToArray(f, true)),
+  };
 }

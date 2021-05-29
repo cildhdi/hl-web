@@ -1,6 +1,6 @@
 import { SERVER } from '../config';
 import { IS_DEBUG } from './debug';
-import { framesToShapeTrack } from './frame';
+import { framesToList } from './frame';
 
 export interface TestItem {
   shape: number[][];
@@ -12,9 +12,7 @@ export async function fetchTestCases(): Promise<TestItem[]> {
   return (await fetch('/test-cases.json')).json();
 }
 
-export async function reco(
-  param: ReturnType<typeof framesToShapeTrack>
-): Promise<{
+export async function reco(param: ReturnType<typeof framesToList>): Promise<{
   code: number;
   data: string;
 }> {
@@ -26,6 +24,9 @@ export async function reco(
       method: 'post',
       body: JSON.stringify(Object.assign({}, param, prxoy ? { addr } : {})),
       mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
     })
   ).json();
 }
