@@ -29,7 +29,7 @@ export const Settings: React.FC = () => {
             className="block w-full"
             value={frameMod}
             onChange={setFrameMod}
-            min={5}
+            min={1}
             max={50}
           />
         </Form.Item>
