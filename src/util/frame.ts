@@ -80,12 +80,14 @@ const handToPoints = (hand: Hand): Point[] => [
   hand.arm.nextJoint,
   // hand.arm.prevJoint,
   ...flatten(
-    hand.fingers.map((finger) => [
-      finger.mcpPosition,
-      finger.pipPosition,
-      finger.dipPosition,
-      finger.distal.nextJoint,
-    ])
+    hand.fingers
+      .sort((a, b) => a.type - b.type)
+      .map((finger) => [
+        finger.mcpPosition,
+        finger.pipPosition,
+        finger.dipPosition,
+        finger.distal.nextJoint,
+      ])
   ),
 ];
 
