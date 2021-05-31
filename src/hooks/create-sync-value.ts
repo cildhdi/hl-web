@@ -62,7 +62,8 @@ export const createSyncValue = <T>(name: string, defaultValue: T) => {
 
 export const useSync = {
   Count: createSyncValue('Count', 0),
-  Disabled: createSyncValue('Disabled', true),
+  StartStopDisabled: createSyncValue('StartStopDisabled', true),
   Collect: createSyncValue('Collect', false),
   Delay: createSyncValue('Delay', 2),
+  UploadDisabled: createSyncValue('UploadDisabled', true),
 };

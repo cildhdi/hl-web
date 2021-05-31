@@ -26,10 +26,16 @@ export const RecoControl: React.FC = () => {
   );
 
   useEvent('reco_btn', onClick);
-  const [, setDisabled] = useSync.Disabled();
+  useEvent('upload', uploadToReco);
+  const [, setStartStopDisabled] = useSync.StartStopDisabled();
+  const [, setUploadDisabled] = useSync.UploadDisabled();
   useEffect(
-    () => setDisabled(loading || !deviceStreaming),
+    () => setStartStopDisabled(loading || !deviceStreaming),
     [loading, deviceStreaming] //eslint-disable-line react-hooks/exhaustive-deps
+  );
+  useEffect(
+    () => setUploadDisabled(!frames.current.length || collect),
+    [!frames.current.length || collect] //eslint-disable-line react-hooks/exhaustive-deps
   );
 
   return (
