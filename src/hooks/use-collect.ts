@@ -9,6 +9,7 @@ import { Frame, framesToList } from '../util/frame';
 import { reco } from '../util/service';
 import { sleep } from '../util/sleep';
 import { useSync } from './create-sync-value';
+import { useEmit } from './use-hl-event';
 import { useRecoHistory } from './use-reco-history';
 
 export const useCollect = () => {
@@ -32,6 +33,8 @@ export const useCollect = () => {
       }),
     [listenFrame] //eslint-disable-line react-hooks/exhaustive-deps
   );
+
+  const emitResult = useEmit();
 
   const startCollectSyncState = useAsyncFn(async () => {
     if (!latestCollect.current) {
@@ -66,6 +69,7 @@ export const useCollect = () => {
           content: data,
           key,
         });
+        emitResult('reco_result', data);
         addHistory({
           result: data,
         });
@@ -77,7 +81,7 @@ export const useCollect = () => {
           key,
         });
       });
-  }, [addHistory]);
+  }, [addHistory, emitResult]);
 
   const stopCollect = useCallback(async () => {
     if (latestCollect.current) {

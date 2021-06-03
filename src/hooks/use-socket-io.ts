@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { v4 as uuid } from 'uuid';
 
-import { SERVER } from '../config';
+import { ROOM_SERVER } from '../config';
 
 const generateToken = () => `hld://${uuid()}`;
 
@@ -20,7 +20,7 @@ export const useSocketIo = createModel(() => {
           prevSocket?.disconnect();
         }
 
-        const nextSocket = io(SERVER, {
+        const nextSocket = io(ROOM_SERVER, {
           query: {
             token,
             ctype: 'device',
