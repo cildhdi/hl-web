@@ -5,4 +5,4 @@ export enum RoutePath {
 
 export const ROOM_SERVER = 'https://hl.ketra.fun:6290';
 
-export const SERVER = 'https://thl.ketra.fun:6290';
+export const SERVER = 'https://hl.ketra.fun:6291';
