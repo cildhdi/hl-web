@@ -1,6 +1,5 @@
-import { SERVER } from '../config';
-import { IS_DEBUG } from './debug';
-import { framesToList } from './frame';
+import { ROOM_SERVER, SERVER } from '../config';
+import { framesToList, framesToShapeTrack } from './frame';
 
 export interface TestItem {
   shape: number[][];
@@ -12,17 +11,35 @@ export async function fetchTestCases(): Promise<TestItem[]> {
   return (await fetch('/test-cases.json')).json();
 }
 
+export async function recold(
+  param: ReturnType<typeof framesToShapeTrack>
+): Promise<{
+  code: number;
+  data: string;
+}> {
+  const addr = `${ROOM_SERVER}/recold`;
+
+  return (
+    await fetch(addr, {
+      method: 'post',
+      body: JSON.stringify(param),
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+    })
+  ).json();
+}
+
 export async function reco(param: ReturnType<typeof framesToList>): Promise<{
   code: number;
   data: string;
 }> {
   const addr = `${SERVER}/reco`;
-  const prxoy = addr.startsWith('http:') && !IS_DEBUG;
-
   return (
-    await fetch(prxoy ? '/api/proxy' : addr, {
+    await fetch(addr, {
       method: 'post',
-      body: JSON.stringify(Object.assign({}, param, prxoy ? { addr } : {})),
+      body: JSON.stringify(param),
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',

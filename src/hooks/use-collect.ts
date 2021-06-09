@@ -5,11 +5,12 @@ import { useAsyncFn, useLatest, useUpdate } from 'react-use';
 import { v4 as uuidV4 } from 'uuid';
 
 import { useLeapController } from '../hooks/use-leap-controller';
-import { Frame, framesToList } from '../util/frame';
-import { reco } from '../util/service';
+import { Frame, framesToList, framesToShapeTrack } from '../util/frame';
+import { reco, recold } from '../util/service';
 import { sleep } from '../util/sleep';
 import { useSync } from './create-sync-value';
 import { useEmit } from './use-hl-event';
+import { useOldApi } from './use-old-api';
 import { useRecoHistory } from './use-reco-history';
 
 export const useCollect = () => {
@@ -62,8 +63,10 @@ export const useCollect = () => {
       duration: 0,
       key,
     });
-    const param = framesToList(frames.current);
-    reco(param)
+    (useOldApi.data?.[0]
+      ? recold(framesToShapeTrack(frames.current))
+      : reco(framesToList(frames.current))
+    )
       .then(({ data }) => {
         message.success({
           content: data,

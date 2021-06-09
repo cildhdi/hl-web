@@ -76,9 +76,14 @@ export function convertFrame(frame: any): Frame {
   return result;
 }
 
+const localConfig = {
+  includeElbow: false,
+};
+
 const handToPoints = (hand: Hand): Point[] => [
-  hand.arm.nextJoint,
-  // hand.arm.prevJoint,
+  ...(localConfig.includeElbow
+    ? [hand.arm.nextJoint, hand.arm.prevJoint]
+    : [hand.arm.nextJoint]),
   ...flatten(
     hand.fingers
       .sort((a, b) => a.type - b.type)
@@ -105,16 +110,17 @@ function frameToArray(frame: Frame, shape?: boolean): number[] {
 
   const leftHandArray = leftHand
     ? (shape ? handToShapeArray : handToArray)(leftHand)
-    : fill(Array(63), 0);
+    : fill(Array(localConfig.includeElbow ? 66 : 63), 0);
 
   const rightHandArray = rightHand
     ? (shape ? handToShapeArray : handToArray)(rightHand)
-    : fill(Array(63), 0);
+    : fill(Array(localConfig.includeElbow ? 66 : 63), 0);
 
   return flatten([leftHandArray, rightHandArray]);
 }
 
 export function framesToShapeTrack(frames: Frame[]) {
+  localConfig.includeElbow = true;
   const frameMod = useFrameMod.data?.[0] ?? 5;
   frames = frames.filter((_, index) => index % frameMod === 0);
   const shape = frames.map((f) => frameToArray(f, true));
@@ -129,16 +135,14 @@ export function framesToShapeTrack(frames: Frame[]) {
         })
       );
       return cur;
-    }, fill(Array(63), 0));
+    }, fill(Array(localConfig.includeElbow ? 66 : 63), 0));
 
   return { shape, track };
 }
 
 export function framesToList(frames: Frame[]) {
-  const frameMod = useFrameMod.data?.[0] ?? 5;
+  localConfig.includeElbow = false;
   return {
-    data: frames
-      .filter((_, index) => index % frameMod === 0)
-      .map((f) => frameToArray(f, true)),
+    data: frames.map((f) => frameToArray(f, true)),
   };
 }

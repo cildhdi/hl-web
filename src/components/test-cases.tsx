@@ -7,7 +7,7 @@ import { useAsync, useAsyncFn } from 'react-use';
 
 import { css } from '@emotion/react';
 
-import { fetchTestCases, TestItem } from '../util/service';
+import { fetchTestCases, recold, TestItem } from '../util/service';
 
 const ShowCase: React.FC<{ testCases: TestItem[] }> = ({ testCases }) => {
   const [selectedItem, setSelectedItem] = useState<TestItem>();
@@ -105,7 +105,7 @@ export const TestsCasesModal: React.FC<{
 const RunTestButton: React.FC<{ testItem: TestItem }> = ({ testItem }) => {
   const [{ loading }, runTest] = useAsyncFn(async () => {
     try {
-      // message.success((await reco(testItem)).data);
+      message.success((await recold(testItem)).data);
     } catch (error) {
       message.error('识别接口出错');
     }
